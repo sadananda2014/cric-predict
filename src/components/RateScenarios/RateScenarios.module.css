@@ -1,0 +1,107 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  transition: border-color 0.15s;
+}
+
+.cardCurrent {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+.rateRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rateLabel {
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.currentBadge {
+  font-size: 0.6rem;
+  background: rgba(96, 165, 250, 0.2);
+  color: var(--accent);
+  padding: 0.1rem 0.35rem;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.actionBadge {
+  font-size: 0.62rem;
+  padding: 0.1rem 0.35rem;
+  border-radius: 6px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.betNow {
+  background: rgba(52, 211, 153, 0.15);
+  color: var(--green);
+}
+
+.wait {
+  background: rgba(136, 136, 136, 0.15);
+  color: var(--text-muted);
+}
+
+.lockProfit {
+  background: rgba(52, 211, 153, 0.15);
+  color: var(--green);
+}
+
+.reduceExposure {
+  background: rgba(251, 191, 36, 0.15);
+  color: var(--yellow, #fbbf24);
+}
+
+.actionLine {
+  font-size: 0.7rem;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.projRow {
+  font-size: 0.68rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.projLabel {
+  color: var(--text-muted);
+}
