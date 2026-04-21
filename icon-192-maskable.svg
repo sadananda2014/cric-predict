@@ -1,0 +1,13 @@
+<svg viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg">
+  <!-- Centered design for maskable icon (safe zone: ~100-100 to 92px radius) -->
+  <!-- Cricket ball - centered -->
+  <circle cx="96" cy="96" r="35" fill="#4f46e5"/>
+  
+  <!-- Inner stripe -->
+  <line x1="61" y1="96" x2="131" y2="96" stroke="#fff" stroke-width="3"/>
+  <path d="M 65 85 Q 90 105 125 96" stroke="#fff" stroke-width="2" fill="none"/>
+  
+  <!-- Stitch marks -->
+  <circle cx="96" cy="75" r="2" fill="#fff"/>
+  <circle cx="96" cy="117" r="2" fill="#fff"/>
+</svg>

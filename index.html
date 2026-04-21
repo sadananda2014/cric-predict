@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/cric-predict/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#4f46e5" />
+    <meta name="description" content="Track live cricket bets, analyze positions, get hedging suggestions with Indian Lagaai/Khaai rate system" />
+    
+    <!-- PWA / Mobile Web App -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="CricPredict" />
+    <link rel="manifest" href="/cric-predict/manifest.json" />
+    <link rel="apple-touch-icon" href="/cric-predict/icon-192.svg" />
+    
+    <title>CricPredict - Cricket Betting Analyzer</title>
+    <script type="module" crossorigin src="/cric-predict/assets/index-E0RrZGdi.js"></script>
+    <link rel="stylesheet" crossorigin href="/cric-predict/assets/index-P7yIgzy7.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    
+    <!-- Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').then(
+            (registration) => {
+              console.log('✓ Service Worker registered:', registration);
+            },
+            (error) => {
+              console.warn('✗ Service Worker registration failed:', error);
+            }
+          );
+        });
+      }
+    </script>
+  </body>
+</html>
