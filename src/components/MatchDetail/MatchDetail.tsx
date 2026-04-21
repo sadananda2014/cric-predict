@@ -9,6 +9,9 @@ import { PositionSummary } from '../PositionSummary/PositionSummary';
 import { Suggestion } from '../Suggestion/Suggestion';
 import { RateScenarios } from '../RateScenarios/RateScenarios';
 import { LiveScore } from '../LiveScore/LiveScore';
+import { RateChart } from '../RateChart/RateChart';
+import { Analytics } from '../Analytics/Analytics';
+import { Predictor } from '../Predictor/Predictor';
 import { Button } from '../common';
 import type { Match } from '../../types';
 import styles from './MatchDetail.module.css';
@@ -21,6 +24,8 @@ export function MatchDetail({ match }: MatchDetailProps) {
   const completeMatch = useMatchStore((s) => s.completeMatch);
   const [selectedWinner, setSelectedWinner] = useState('');
   const [showComplete, setShowComplete] = useState(false);
+  const [showSave, setShowSave] = useState(false);
+  const [saveName, setSaveName] = useState(`${match.teamA} vs ${match.teamB}`);
 
   // Hedging suggestion
   const latestRate = match.rateEntries.length > 0
@@ -41,6 +46,19 @@ export function MatchDetail({ match }: MatchDetailProps) {
     setShowComplete(false);
   }
 
+  function handleSave() {
+    const fileName = saveName.trim() || `${match.teamA} vs ${match.teamB}`;
+    const data = JSON.stringify(match, null, 2);
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${fileName}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    setShowSave(false);
+  }
+
   // Calculate realized P&L for completed matches
   const realizedPnL =
     match.status === 'completed' && match.winner
@@ -59,14 +77,45 @@ export function MatchDetail({ match }: MatchDetailProps) {
         <Link to="/" className={styles.backLink}>
           ← Back
         </Link>
-        <span
-          className={`${styles.statusBadge} ${
-            match.status === 'active' ? styles.active : styles.completed
-          }`}
-        >
-          {match.status}
-        </span>
+        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+          <button
+            type="button"
+            className={styles.saveBtn}
+            onClick={() => setShowSave(!showSave)}
+            title="Save match to file"
+          >
+            💾 Save
+          </button>
+          <span
+            className={`${styles.statusBadge} ${
+              match.status === 'active' ? styles.active : styles.completed
+            }`}
+          >
+            {match.status}
+          </span>
+        </div>
       </div>
+
+      {/* Save Dialog */}
+      {showSave && (
+        <div className={styles.saveDialog}>
+          <input
+            type="text"
+            className={styles.saveInput}
+            value={saveName}
+            onChange={(e) => setSaveName(e.target.value)}
+            placeholder="Enter file name"
+            onKeyDown={(e) => e.key === 'Enter' && handleSave()}
+            autoFocus
+          />
+          <div style={{ display: 'flex', gap: '0.5rem' }}>
+            <Button variant="secondary" onClick={() => setShowSave(false)}>
+              Cancel
+            </Button>
+            <Button onClick={handleSave}>Download</Button>
+          </div>
+        </div>
+      )}
       <div className={styles.matchTitle}>
         {match.teamA} vs {match.teamB}
       </div>
@@ -109,7 +158,7 @@ export function MatchDetail({ match }: MatchDetailProps) {
           </div>
         </div>
 
-        {/* Column 2: Position, Suggestion */}
+        {/* Column 2: Position, Suggestion, RateChart */}
         <div className={styles.column}>
           <PositionSummary match={match} />
           {suggestion && (
@@ -119,12 +168,24 @@ export function MatchDetail({ match }: MatchDetailProps) {
               teamB={match.teamB}
             />
           )}
+          {match.status === 'active' && (
+            <Predictor match={match} />
+          )}
+          {match.status === 'active' && match.rateEntries.length >= 2 && (
+            <RateChart
+              rateEntries={match.rateEntries}
+              favouriteTeam={match.rateEntries[match.rateEntries.length - 1].favouriteTeam}
+            />
+          )}
         </div>
 
-        {/* Column 3: Rate Scenarios */}
+        {/* Column 3: Rate Scenarios, Analytics */}
         <div className={styles.column}>
           {match.status === 'active' && match.bets.length > 0 && latestRate && (
             <RateScenarios match={match} />
+          )}
+          {match.status === 'active' && (
+            <Analytics match={match} />
           )}
         </div>
       </div>

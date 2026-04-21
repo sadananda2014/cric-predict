@@ -33,6 +33,7 @@ export interface Match {
   rateEntries: RateEntry[];
   createdAt: string;
   completedAt: string | null;
+  scraperUrl: string | null;
 }
 
 export interface Position {

@@ -1,0 +1,233 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.65rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.cardTitle {
+  font-size: 0.78rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.cardIcon {
+  font-size: 0.9rem;
+}
+
+.subtitle {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+/* Breakeven */
+.beRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+}
+
+.beRate {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.beHint {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+
+/* Strategies */
+.strategyList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.strategyItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  font-size: 0.72rem;
+  padding: 0.35rem;
+  background: var(--bg-body);
+  border-radius: 6px;
+  gap: 0.5rem;
+}
+
+.strategyRank {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  min-width: 20px;
+}
+
+.strategyDesc {
+  flex: 1;
+  line-height: 1.4;
+}
+
+.strategyPnl {
+  text-align: right;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.tag {
+  display: inline-block;
+  font-size: 0.6rem;
+  padding: 0.08rem 0.3rem;
+  border-radius: 4px;
+  font-weight: 600;
+  margin-left: 0.3rem;
+}
+
+.tagGreen {
+  background: rgba(52, 211, 153, 0.15);
+  color: var(--green);
+}
+
+.tagRed {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--red);
+}
+
+.tagBlue {
+  background: rgba(96, 165, 250, 0.15);
+  color: var(--accent);
+}
+
+.tagYellow {
+  background: rgba(251, 191, 36, 0.15);
+  color: #fbbf24;
+}
+
+/* Scalp */
+.scalpCard {
+  font-size: 0.72rem;
+  padding: 0.4rem;
+  background: var(--bg-body);
+  border-radius: 6px;
+  line-height: 1.5;
+}
+
+.riskFree {
+  color: var(--green);
+  font-weight: 700;
+  font-size: 0.65rem;
+}
+
+/* Multi-step */
+.planName {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.stepRow {
+  font-size: 0.7rem;
+  padding: 0.3rem 0.4rem;
+  background: var(--bg-body);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.stepCondition {
+  font-weight: 600;
+  color: var(--text-muted);
+  font-size: 0.65rem;
+}
+
+.stepAction {
+  color: var(--text-primary);
+}
+
+.stepPnl {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+
+/* Kelly */
+.kellyRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  padding: 0.35rem;
+  background: var(--bg-body);
+  border-radius: 6px;
+}
+
+.kellyPeti {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.kellyMeta {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+
+/* Alerts */
+.alertForm {
+  display: flex;
+  gap: 0.4rem;
+  align-items: flex-end;
+}
+
+.alertList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.alertItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.72rem;
+  padding: 0.3rem;
+  background: var(--bg-body);
+  border-radius: 6px;
+}
+
+.alertTriggered {
+  border-left: 3px solid var(--green);
+}
+
+.deleteBtn {
+  background: none;
+  border: none;
+  color: var(--red);
+  cursor: pointer;
+  font-size: 0.75rem;
+  padding: 0.1rem 0.3rem;
+}
+
+.empty {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.scrollable {
+  max-height: 80vh;
+  overflow-y: auto;
+}

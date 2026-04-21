@@ -6,8 +6,10 @@ import type { Match, BetType, RateEntry } from '../types';
 export interface MatchStore {
   matches: Record<string, Match>;
 
-  createMatch(teamA: string, teamB: string): string;
+  createMatch(teamA: string, teamB: string, scraperUrl?: string): string;
+  importMatch(match: Match): void;
   completeMatch(matchId: string, winner: string): void;
+  setScraperUrl(matchId: string, url: string): void;
 
   addBet(
     matchId: string,
@@ -36,7 +38,7 @@ export const useMatchStore = create<MatchStore>()(
     (set, get) => ({
       matches: {},
 
-      createMatch(teamA: string, teamB: string): string {
+      createMatch(teamA: string, teamB: string, scraperUrl?: string): string {
         const id = uuidv4();
         const match: Match = {
           id,
@@ -48,11 +50,18 @@ export const useMatchStore = create<MatchStore>()(
           rateEntries: [],
           createdAt: new Date().toISOString(),
           completedAt: null,
+          scraperUrl: scraperUrl?.trim() || null,
         };
         set((state) => ({
           matches: { ...state.matches, [id]: match },
         }));
         return id;
+      },
+
+      importMatch(match: Match): void {
+        set((state) => ({
+          matches: { ...state.matches, [match.id]: match },
+        }));
       },
 
       completeMatch(matchId: string, winner: string): void {
@@ -68,6 +77,19 @@ export const useMatchStore = create<MatchStore>()(
                 winner,
                 completedAt: new Date().toISOString(),
               },
+            },
+          };
+        });
+      },
+
+      setScraperUrl(matchId: string, url: string): void {
+        set((state) => {
+          const match = state.matches[matchId];
+          if (!match) return state;
+          return {
+            matches: {
+              ...state.matches,
+              [matchId]: { ...match, scraperUrl: url.trim() || null },
             },
           };
         });

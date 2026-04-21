@@ -142,3 +142,42 @@
   font-size: 0.8rem;
   color: var(--text-muted);
 }
+
+.saveBtn {
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.saveBtn:hover {
+  border-color: var(--accent);
+}
+
+.saveDialog {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.saveInput {
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg-body);
+  color: var(--text);
+  font-size: 0.85rem;
+  outline: none;
+}
+
+.saveInput:focus {
+  border-color: var(--accent);
+}

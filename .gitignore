@@ -21,6 +21,12 @@ Thumbs.db
 *.log
 npm-debug.log*
 
+# GitHub Pages deployment
+gh-pages/
+
 # Temp
 *.tmp
 *.swp
+
+# Scraper browser profile
+.scraper-profile/

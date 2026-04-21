@@ -1,19 +1,23 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useMatchStore } from '../../store/matchStore';
 import { validateMatchTeams } from '../../engine/validation';
 import { calculatePosition } from '../../engine/pnl';
 import { Button, Input } from '../common';
+import type { Match } from '../../types';
 import styles from './MatchList.module.css';
 
 export function MatchList() {
   const navigate = useNavigate();
   const matches = useMatchStore((s) => s.matches);
   const createMatch = useMatchStore((s) => s.createMatch);
+  const importMatch = useMatchStore((s) => s.importMatch);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [showCreate, setShowCreate] = useState(false);
   const [teamA, setTeamA] = useState('');
   const [teamB, setTeamB] = useState('');
+  const [matchUrl, setMatchUrl] = useState('');
   const [error, setError] = useState('');
 
   const activeMatches = Object.values(matches)
@@ -37,12 +41,35 @@ export function MatchList() {
       setError(result.error!);
       return;
     }
-    const id = createMatch(teamA, teamB);
+    const id = createMatch(teamA, teamB, matchUrl || undefined);
     setTeamA('');
     setTeamB('');
+    setMatchUrl('');
     setShowCreate(false);
     setError('');
     navigate(`/match/${id}`);
+  }
+
+  function handleLoadFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const data = JSON.parse(reader.result as string) as Match;
+        if (!data.id || !data.teamA || !data.teamB) {
+          alert('Invalid match file');
+          return;
+        }
+        importMatch(data);
+        navigate(`/match/${data.id}`);
+      } catch {
+        alert('Could not read file. Make sure it is a valid saved match JSON.');
+      }
+    };
+    reader.readAsText(file);
+    // Reset so the same file can be loaded again
+    e.target.value = '';
   }
 
   function renderMatchItem(match: (typeof matches)[string]) {
@@ -97,6 +124,16 @@ export function MatchList() {
           <Link to="/settings" style={{ fontSize: '1.2rem', textDecoration: 'none' }} title="Settings">
             ⚙️
           </Link>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".json"
+            style={{ display: 'none' }}
+            onChange={handleLoadFile}
+          />
+          <Button variant="secondary" onClick={() => fileInputRef.current?.click()}>
+            📂 Load
+          </Button>
           {!showCreate && (
             <Button onClick={() => setShowCreate(true)}>+ New Match</Button>
           )}
@@ -118,6 +155,12 @@ export function MatchList() {
             value={teamB}
             onChange={(e) => setTeamB(e.target.value)}
             maxLength={10}
+          />
+          <Input
+            label="Betting Site URL (optional)"
+            placeholder="e.g. https://alphabook247.com/client/.../event_detail/..."
+            value={matchUrl}
+            onChange={(e) => setMatchUrl(e.target.value)}
           />
           {error && (
             <span style={{ color: 'var(--red)', fontSize: '0.8rem' }}>
