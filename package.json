@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "scraper": "npx tsx server/scraper.ts",
-    "deploy": "npm run build && git add dist && git commit -m 'Deploy to GitHub Pages' && git push"
+    "deploy": "npm run build && gh-pages -d dist"
   },
   "dependencies": {
     "cors": "^2.8.6",
@@ -33,6 +33,7 @@
     "eslint": "^9.39.4",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.2",
+    "gh-pages": "^6.3.0",
     "globals": "^17.4.0",
     "tsx": "^4.21.0",
     "typescript": "~5.9.3",
