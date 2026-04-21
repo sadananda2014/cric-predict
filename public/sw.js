@@ -117,11 +117,15 @@ self.addEventListener('fetch', (event) => {
         return cached;
       }
       return fetch(request).then((response) => {
+        // Clone BEFORE checking status to avoid double-read
         if (response.status === 200 && response.type !== 'error') {
           const cache = caches.open(CACHE_NAME);
           cache.then((c) => c.put(request, response.clone()));
         }
         return response;
+      }).catch(() => {
+        // Network failed, try cache
+        return caches.match(request);
       });
     })
   );
